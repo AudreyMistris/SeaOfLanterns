@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Sea of Lanterns (Hyakka Ryouran) - ver. Aruvn">
+    <title>The sea of lanterns</title>
+
+    <style>
+        html,
+        body {
+            min-height: 100vh;
+        }
+
+        body {
+            background-image: url(seaoflanterns.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        img {
+            position: absolute;
+            bottom: 0px;
+            /* height: 136px;
+            width: 105px; */
+            height: 272px;
+            width: 210px;
+            z-index: 1;
+        }
+
+        button {
+            background-color: firebrick;
+            border: none;
+            border-radius: 12px;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            z-index: 2;
+
+            position: absolute;
+            bottom: 5px;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="lanternas">
+    </div>
+
+    <center><button id="novo">More lanterns!</button></center>
+
+    <script>
+        //Se o áudio não funcionar automaticamente, fazer "right click" > "Atualizar frame"
+        var audio = new Audio('aseaoflanterns.mp3');
+        audio.load();
+        audio.play();
+        audio.loop = true;
+
+        //mudar velocidade e botão
+        class Lanterna {
+            constructor() {
+                this.x = 0;
+                this.y = 0;
+                this.baseY = Math.random() * window.innerWidth;
+                this.velocidadeX = Math.random() + 1;
+                this.light = document.createElement('img');
+                this.light.src = 'tangledlantern.png';
+                this.light.alt = 'Lanterna';
+                document.querySelector('#lanternas').appendChild(this.light);
+            }
+
+            flutuar() {
+                this.x += this.velocidadeX;
+                this.y = this.baseY + Math.sin(3 * this.x / 99) * 150 / (Math.cos(2 * this.x / 125) + 5) * Math.PI;
+
+                if (this.x >= window.innerHeight) {
+                    this.x = 0;
+                    this.baseY = Math.random() * window.innerWidth;
+                }
+
+                //lanternaEl.style.bottom = x + 'px';
+                this.light.style.transform = 'translate(' + this.y + 'px, ' + -this.x + 'px)';
+                // lanternaEl.style.transform = `translate(${this.y}px, ${-this.x}px)`;
+            }
+        }
+
+        let lanternas = [new Lanterna()/* , new Lanterna(), new Lanterna() */];
+
+        setInterval(() => {
+            for (let i = 0; i < lanternas.length; i++) {
+                lanternas[i].flutuar();
+            }
+        }, 20);
+
+        let newLight = document.querySelector('#novo');
+        newLight.addEventListener('click', () => {
+            lanternas.push(new Lanterna());
+        });
+
+    </script>
+</body>
+
+</html>
