@@ -68,7 +68,6 @@
         audio.play();
         audio.loop = true;
 
-        //mudar velocidade e botão
         class Lanterna {
             constructor() {
                 this.x = 0;
@@ -90,13 +89,13 @@
                     this.baseY = Math.random() * window.innerWidth;
                 }
 
-                //lanternaEl.style.bottom = x + 'px';
+                //lanternaEl.style.bottom = -x + 'px';
                 this.light.style.transform = 'translate(' + this.y + 'px, ' + -this.x + 'px)';
                 // lanternaEl.style.transform = `translate(${this.y}px, ${-this.x}px)`;
             }
         }
 
-        let lanternas = [new Lanterna()/* , new Lanterna(), new Lanterna() */];
+        let lanternas = [new Lanterna()];
 
         setInterval(() => {
             for (let i = 0; i < lanternas.length; i++) {
